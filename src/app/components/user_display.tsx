@@ -1,4 +1,5 @@
 import { prestige_border } from '@/lib/game_constants';
+import Image from 'next/image';
 export default function UserDisplay(props: any) {
   const user = props.user;
   return (
@@ -9,17 +10,21 @@ export default function UserDisplay(props: any) {
       <div className="flex-row center">
         <div>
           <div className="profile-pic-parent">
-            <img
+            <Image
               className="profile-pic-background"
               src="https://raw.communitydragon.org/latest/game/assets/loadouts/regalia/banners/banner_default.png"
               alt="profile-pic-background"
+              width={352}
+              height={300}
             />
-            <img
+            <Image
               className="profile-pic"
               src={`${process.env.RAW_COMMUNITY_URL}${process.env.PATCH}/game/assets/ux/summonericons/profileicon${user.profileIconId}.png`}
               alt="profile-pic"
+              width={160}
+              height={160}
             />
-            <img
+            <Image
               className="profile-pic-border"
               src={`${
                 process.env.RAW_COMMUNITY_URL
@@ -27,6 +32,8 @@ export default function UserDisplay(props: any) {
                 user.summonerLevel
               )}.png`}
               alt="profile-pic-border"
+              width={368}
+              height={368}
             />
             <div className="profile-pic-text">
               <p>{user.summonerLevel}</p>

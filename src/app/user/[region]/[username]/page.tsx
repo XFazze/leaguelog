@@ -12,8 +12,9 @@ export default async function page({
   const user: UserResponse = await get_user_by_username(params.region, params.username);
   return (
     <div>
-      <UserDisplay user={user} />
-      {/* <Suspense fallback={<div>Loading...</div>}></Suspense> */}
+      <Suspense fallback={<div>Loading...</div>}>
+        <UserDisplay user={user} />
+      </Suspense>
     </div>
   );
 }

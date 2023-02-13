@@ -11,14 +11,17 @@ export type UserResponse = {
     revisionDate: number,
     summonerLevel: number
 }
-export async function get_user_by_username(region: string, username: string): Promise<UserResponse> {
+export async function get_user_by_username(region: string = '', username: string = ''): Promise<UserResponse> {
+    if (!region || !username) {
+        throw Error("Regrion or username does not exist.")
+    }
     const region_format = Object.keys(RegionNames)[Object.values(RegionNames).indexOf(region)]
     const url = `${region_format}.${process.env.RIOT_URL}summoner/v4/summoners/by-name/${username}`
     return await request_riot(url);
 }
 async function request_riot(url: string, params: { [name: string]: any } = {}) {
     params['api_key'] = process.env.RIOT_KEY
-    const response = await fetch("https://" + url + "?" + new URLSearchParams(params), { next: { revalidate: 120 } })
+    const response = await fetch("https://" + url + "?" + new URLSearchParams(params), { next: { revalidate: 10 }, cache: "no-store" })
     // console.log("FORMAT URL", "https://" + url + "?" + new URLSearchParams(params))
     if (!response.ok) {
         if (response.status == 403) {
