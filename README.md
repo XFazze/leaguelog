@@ -1,6 +1,6 @@
 # League log
 
-League stat website in nextjs 13.
+**WIP** League stat website in nextjs 13.
 
 ## Development
 
