@@ -1,6 +1,5 @@
-import { prestige_border } from '@/lib/gameConstants';
 import Image from 'next/image';
-export default function UserDisplay(props: any) {
+export default function MatchHistoryDisplay(props: any) {
   const user = props.user;
   return (
     <div className="flex-col">

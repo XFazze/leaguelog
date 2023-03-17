@@ -1,6 +1,6 @@
 'use client';
 import { Inter } from '@next/font/google';
-import { RegionNames } from '@/lib/game_constants';
+import { RegionNames } from '@/lib/gameConstants';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 

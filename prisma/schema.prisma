@@ -1,0 +1,35 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+
+  relationMode = "prisma"
+}
+
+model User {
+  updatedAt     DateTime @updatedAt
+  accountId     String   @id
+  profileIconId Int
+  revisionDate  BigInt
+  name          String
+  id            String
+  puuid         String
+  summonerLevel Int
+}
+
+model Ratelimit {
+  id   Int      @id @default(autoincrement())
+  type String
+  date DateTime @default(now())
+}
+
+// model MatchHistory {
+//   puuid   String
+//   matchId
+// }
