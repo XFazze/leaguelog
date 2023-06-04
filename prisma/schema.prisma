@@ -6,10 +6,10 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 
-  relationMode = "prisma"
+  // relationMode = "prisma"
 }
 
 model User {
@@ -27,6 +27,33 @@ model Ratelimit {
   id   Int      @id @default(autoincrement())
   type String
   date DateTime @default(now())
+}
+
+model Rank {
+  id                 Int      @id @default(autoincrement())
+  createdAt          DateTime @default(now())
+  leagueId           String
+  summonerId         String
+  summonerName       String
+  queueType          String
+  tier               String
+  rank               String
+  leaguePoints       Int
+  wins               Int
+  losses             Int
+  hotStreak          Boolean
+  veteran            Boolean
+  freshBlood         Boolean
+  inactive           Boolean
+  miniSerieswins     Int?
+  miniSerieslosses   Int?
+  miniSeriesprogress String?
+  miniSeriestarget   Int?
+}
+
+model MatchHistory {
+  puuid   String   @id
+  matches String[]
 }
 
 // model MatchHistory {

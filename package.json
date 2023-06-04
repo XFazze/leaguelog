@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "tailwatch": "npx tailwindcss -w -i src/app/input.css -o src/app/globals.css",
+    "pstudio": "npx prisma studio"
   },
   "dependencies": {
     "@next/font": "^13.1.6",
@@ -15,15 +17,15 @@
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.10",
     "eslint": "8.34.0",
-    "eslint-config-next": "13.1.6",
+    "eslint-config-next": "^13.4.4",
     "nest": "^0.1.6",
-    "next": "13.1.6",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "next": "^13.4.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "swr": "^2.0.3",
     "typescript": "4.9.5"
   },
   "devDependencies": {
-    "prisma": "^4.11.0"
+    "prisma": "^4.13.0"
   }
 }

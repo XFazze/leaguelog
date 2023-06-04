@@ -1,6 +1,7 @@
 import './globals.css';
-import localFont from '@next/font/local';
+import localFont from 'next/font/local';
 import Link from 'next/link';
+import SearchBar from './components/SearchBar';
 
 const spiegel = localFont({
   src: [
@@ -17,20 +18,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
       <head />
-      <body className="">
-        <div className="flex-col">
+      <body className="bg-cyan-950">
+        <div className="flex-col ">
           <div
-            className="w-full flex-row p-2 gap space-between border-bottom-secondary"
+            className="w-full flex flex-row p-2 justify-between border-bottom-secondary"
             style={{ ['--gap' as any]: '2rem' }}
           >
-            <div className="gap" style={{ ['--gap' as any]: '2rem' }}>
+            <div className="gap " style={{ ['--gap' as any]: '2rem' }}>
               <Link href="/">
                 <h1>League Log</h1>
               </Link>
             </div>
-            <Link href="https://fabianoden.com" target="_blank">
-              <h1>Owners website</h1>
-            </Link>
+            <SearchBar></SearchBar>
           </div>
           <div className="w-full p-4">{children}</div>
         </div>

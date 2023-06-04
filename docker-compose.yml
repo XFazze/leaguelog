@@ -7,3 +7,21 @@ services:
     env_file:
       - .env
       - .env.local
+    depends_on:
+      - db
+    
+  db:
+    image: postgres
+    restart: always
+    # env_file:
+    #   - .env
+    #   - .env.local
+    environment:
+      - POSTGRES_USER=prisma
+      - POSTGRES_PASSWORD=prisma
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres:/var/lib/postgresql/data
+volumes:
+  postgres:

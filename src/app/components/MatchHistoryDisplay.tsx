@@ -1,38 +1,26 @@
+import { get_match_by_matchId, get_matchhistory_by_puuid } from '@/lib/riotApi';
 import Image from 'next/image';
-export default function MatchHistoryDisplay(props: any) {
-  const user = props.user;
+import { Suspense } from 'react';
+
+export default async function MatchHistoryDisplay({ large_region, puuid }: { large_region: string; puuid: string }) {
+  var match_history = await get_matchhistory_by_puuid(large_region, puuid);
   return (
     <div className="flex-col">
-      <div>
-        <h1>{user.name}</h1>
-      </div>
-      <div className="flex-row center">
-        <div>
-          <div className="profile-pic-parent">
-            <Image
-              className="profile-pic"
-              src={`${process.env.RAW_COMMUNITY_URL}${process.env.PATCH}/game/assets/ux/summonericons/profileicon${user.profileIconId}.png`}
-              alt="profile-pic"
-              width={160}
-              height={160}
-            />
-            <Image
-              className="profile-pic-border"
-              src={`${
-                process.env.RAW_COMMUNITY_URL
-              }/latest/game/assets/loadouts/regalia/crests/prestige/prestige_crest_lvl_${prestige_border(
-                user.summonerLevel
-              )}.png`}
-              alt="profile-pic-border"
-              width={368}
-              height={368}
-            />
-            <div className="profile-pic-text">
-              <p>{user.summonerLevel}</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      {match_history.map((matchId: string) => (
+        <Suspense key={'match:' + matchId} fallback={<div>Match loading...</div>}>
+          {/* @ts-expect-error Server Component */}
+          <MatchDisplay large_region={large_region} id={matchId} />
+        </Suspense>
+      ))}
     </div>
   );
+
+  async function MatchDisplay(large_region: string, id: string) {
+    var match = await get_match_by_matchId(large_region, id);
+    return (
+      <div>
+        <p>{match}</p>
+      </div>
+    );
+  }
 }

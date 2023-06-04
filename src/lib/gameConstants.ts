@@ -1,6 +1,6 @@
 export enum RegionNames {
-    EUNE = <any>"eun1",
     EUW = <any>"euw1",
+    EUNE = <any>"eun1",
     BR = <any>"br1",
     JP = <any>"jp1",
     LA = <any>"la1",
@@ -10,7 +10,7 @@ export enum RegionNames {
     TR = <any>"tri1",
 }
 export function prestige_border(level: number) {
-    var level = level % 25;
+    // var level = level % 25;
     var level_stage: string = pad(level - level % 25, 3)
     if (level_stage == "000") {
         level_stage = "001"
@@ -24,4 +24,15 @@ function pad(num: number, size: number): string {
     var number: string = num.toString();
     while (number.length < size) number = "0" + number;
     return number;
-} 
+}
+export var LargeRegionsConverter: Record<string, string> = {
+    EUNE: "europe",
+    EUW: "europe",
+    BR: "americas",
+    JP: "asia",
+    LA: "americas",
+    LA2: "americas",
+    NA: "americas",
+    OC: "europe",
+    TR: "europe"
+}
