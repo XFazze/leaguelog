@@ -17,7 +17,8 @@ RUN \
     else echo "Lockfile not found." && exit 1; \
     fi
 
-
+# prisma 
+RUN npx prisma generate
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
