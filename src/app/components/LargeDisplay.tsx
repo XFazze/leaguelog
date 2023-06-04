@@ -1,6 +1,6 @@
 // 'use client';
 import { get_ranks_by_summonerId } from '@/lib/riotApi';
-import { Rank } from '@prisma/client';
+// import { Rank } from '@prisma/client';
 import React, { Suspense } from 'react';
 
 export default async function LargeDisplay({ children }: { children: React.ReactNode }) {
