@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "tailwatch": "npx tailwindcss -w -i src/app/input.css -o src/app/globals.css",
-    "pstudio": "npx prisma studio"
+    "prisma-generate": "npx prisma generate",
+    "prisma-push": "npx prisma db push"
   },
   "dependencies": {
     "@next/font": "^13.1.6",

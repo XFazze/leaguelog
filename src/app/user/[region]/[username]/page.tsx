@@ -16,6 +16,7 @@ export default async function page({
   params: { region: string; username: string };
   searchParams: {};
 }) {
+  // prisma.$connect();
   const user = await get_user_by_username(params.region, decodeURIComponent(params.username));
   if (!user) {
     <div>
