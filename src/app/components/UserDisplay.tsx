@@ -3,11 +3,11 @@ import Image from 'next/image';
 export default function UserDisplay(props: any) {
   const user = props.user;
   return (
-    <div className="flex-col">
+    <div className="flex flex-col content-center">
       <div>
         <h1 className="text-xl">{user.name}</h1>
       </div>
-      <div className=" flex-row center w-28 ">
+      <div className=" center w-28 ">
         <div className="relative h-32">
           <Image
             className="absolute z-10 scale-50"

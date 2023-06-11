@@ -49,17 +49,6 @@
       color-scheme: dark;
     }
   } */
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
 
 body {
   background-color: rgb(var(--color-background));
@@ -75,6 +64,8 @@ p,
 a,
 label {
   color: rgb(var(--color-secondary));
+  font-size: 0.75rem;
+  line-height: 1.25rem;
 }
 a {
   text-decoration: none;

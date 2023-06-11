@@ -12,7 +12,7 @@ export default async function RanksDisplay({ region, id }: { region: string; id:
     }
   });
   return (
-    <div className=" flex flex-col justify-center">
+    <div className=" flex flex-col">
       <SingleRankDisplay rank={solo} name="Soloq" />
       <SingleRankDisplay rank={flex} name="Flex" />
     </div>
@@ -23,17 +23,35 @@ export default async function RanksDisplay({ region, id }: { region: string; id:
     if (!rank) {
       return null;
     }
+    let display_rank = 0;
+    if (rank.rank == 'I') {
+      display_rank = 1;
+    } else if (rank.rank == 'II') {
+      display_rank = 2;
+    } else if (rank.rank == 'III') {
+      display_rank = 3;
+    } else if (rank.rank == 'IV') {
+      display_rank = 4;
+    }
     return (
       <div>
         {rank !== null ? (
           <div>
-            <p className="text-sm">{name}</p>
-            <p>
-              {rank.tier} {rank.rank} - {rank.leaguePoints}LP
-            </p>
-            <p>
-              {rank.wins}w/{rank.losses}l - {Math.round((1000 * rank.wins) / (rank.wins + rank.losses)) / 10}%
-            </p>
+            <p>{name}</p>
+            <div className="flex flex-row justify-between gap-4">
+              <div className="flex flex-col content-around">
+                <h1>
+                  {rank.tier} {display_rank}
+                </h1>
+                <p>
+                  {rank.wins}w/{rank.losses}l{' '}
+                </p>
+              </div>
+              <div className="flex flex-col content-around">
+                <p>{rank.leaguePoints}LP</p>
+                <p> {Math.round((1000 * rank.wins) / (rank.wins + rank.losses)) / 10}%</p>
+              </div>
+            </div>
           </div>
         ) : (
           <p>No {name} rank</p>

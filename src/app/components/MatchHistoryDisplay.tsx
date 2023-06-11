@@ -6,6 +6,7 @@ export default async function MatchHistoryDisplay({ large_region, puuid }: { lar
   var match_history = await get_matchhistory_by_puuid(large_region, puuid);
   return (
     <div className="flex-col">
+      <p>match hhistory</p>
       {match_history.map((matchId: string) => (
         <Suspense key={'match:' + matchId} fallback={<div>Match loading...</div>}>
           {/* @ts-expect-error Server Component */}
@@ -15,11 +16,12 @@ export default async function MatchHistoryDisplay({ large_region, puuid }: { lar
     </div>
   );
 
-  async function MatchDisplay(large_region: string, id: string) {
-    var match = await get_match_by_matchId(large_region, id);
+  async function MatchDisplay({ large_region, id }: { large_region: string; id: string }) {
+    // var match = await get_match_by_matchId(large_region, id);
     return (
       <div>
-        <p>{match}</p>
+        <p>This is a match id:{id}</p>
+        {/* <p>{match}</p> */}
       </div>
     );
   }

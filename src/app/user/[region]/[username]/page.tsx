@@ -8,6 +8,7 @@ import { Rank, User } from '@prisma/client';
 import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
 import LargeDisplay from '@/app/components/LargeDisplay';
+import MasteryDisplay from '@/app/components/MasteryDisplay';
 
 export default async function page({
   params,
@@ -28,7 +29,7 @@ export default async function page({
   var large_region = LargeRegionsConverter[params.region];
   return (
     <div className="flex flex-row gap-8">
-      <div className="flex flex-row justify-center gap-4 backdrop-brightness-75 p-1 rounded-md">
+      <div className="flex flex-row  gap-4 backdrop-brightness-75 p-1 rounded-md">
         <Suspense fallback={<div>Profile loading...</div>}>
           <UserDisplay user={user} />
         </Suspense>
@@ -37,6 +38,13 @@ export default async function page({
           <RanksDisplay region={params.region} id={user.id} />
         </Suspense>
       </div>
+      {/* @ts-expect-error Server Component */}
+      <LargeDisplay large_region={large_region} region={params.region} puuid={user.puuid}>
+        {/* @ts-expect-error Server Component */}
+        <MatchHistoryDisplay large_region={large_region} puuid={user.puuid}></MatchHistoryDisplay>
+        {/* @ts-expect-error Server Component */}
+        <MasteryDisplay region={params.region} puuid={user.puuid}></MasteryDisplay>
+      </LargeDisplay>
     </div>
   );
 }

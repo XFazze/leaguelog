@@ -60,3 +60,18 @@ model MatchHistory {
 //   puuid   String
 //   matchId
 // }
+
+model Mastery {
+  puuid                        String
+  championId                   Int
+  championLevel                Int
+  championPoints               Int
+  lastPlayTime                 BigInt
+  championPointsSinceLastLevel Int
+  championPointsUntilNextLevel Int
+  chestGranted                 Boolean
+  tokensEarned                 Int
+  summonerId                   String
+
+  @@id([puuid, championId])
+}
