@@ -13,15 +13,15 @@ export default async function LargeDisplay({
   puuid: string;
   children: React.ReactNode;
 }) {
-  var tabs: Record<string, React.ReactNode> = {};
-  const [page, setPage] = React.useState('MatchHistoryDisplay');
-  Children.map(children, (child) => {
-    return console.log(child);
-  });
+  // var tabs: Record<string, React.ReactNode> = {};
+  // const [page, setPage] = React.useState('MatchHistoryDisplay');
+  // Children.map(children, (child) => {
+  //   return console.log(child);
+  // });
   return (
-    <div className=" flex flex-col justify-center backdrop-brightness-75">
+    <div className=" flex flex-col justify-top backdrop-brightness-75 p-2">
       {/* {children.map((child: React.ReactElement) => ({ child }))} */}
-      <div>children {children}</div>
+      {children}
     </div>
   );
 }

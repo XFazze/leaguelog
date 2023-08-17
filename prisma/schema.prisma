@@ -13,8 +13,8 @@ datasource db {
 }
 
 model User {
-  updatedAt     DateTime @updatedAt
   accountId     String   @id
+  updatedAt     DateTime @updatedAt
   profileIconId Int
   revisionDate  BigInt
   name          String
@@ -30,36 +30,213 @@ model Ratelimit {
 }
 
 model Rank {
-  id                 Int      @id @default(autoincrement())
-  createdAt          DateTime @default(now())
-  leagueId           String
-  summonerId         String
-  summonerName       String
-  queueType          String
-  tier               String
-  rank               String
-  leaguePoints       Int
-  wins               Int
-  losses             Int
-  hotStreak          Boolean
-  veteran            Boolean
-  freshBlood         Boolean
-  inactive           Boolean
-  miniSerieswins     Int?
-  miniSerieslosses   Int?
-  miniSeriesprogress String?
-  miniSeriestarget   Int?
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now())
+  leagueId     String?
+  queueType    String
+  tier         String?
+  rank         String?
+  summonerId   String
+  summonerName String
+  leaguePoints Int
+  wins         Int
+  losses       Int
+  veteran      Boolean
+  inactive     Boolean
+  freshBlood   Boolean
+  hotStreak    Boolean
 }
 
 model MatchHistory {
-  puuid   String   @id
-  matches String[]
+  puuid     String   @id
+  updatedAt DateTime @default(now()) @updatedAt
+  matches   String[]
 }
 
-// model MatchHistory {
-//   puuid   String
-//   matchId
-// }
+model Match {
+  matchId              String        @id
+  participants         String[]
+  gameCreation         BigInt
+  gameDuration         Int
+  gameEndTimestamp     BigInt
+  gameId               BigInt
+  gameMode             String
+  gameName             String
+  gameStartTimestamp   BigInt
+  gameType             String
+  gameVersion          String
+  mapId                Int
+  platformId           String
+  queueId              Int
+  tournamentCode       String
+  team0BanChampionId   Int[]
+  team0BaronFirst      Boolean
+  team0BaronKills      Int
+  team0ChampionsFirst  Boolean
+  team0ChampionsKills  Int
+  team0DragonFirst     Boolean
+  team0DragonKills     Int
+  team0InhibitorFirst  Boolean
+  team0InhibitorKills  Int
+  team0RiftHeraldFirst Boolean
+  team0RiftHeraldKills Int
+  team0TowerFirst      Boolean
+  team0TowerKills      Int
+  team1BaronKills      Int
+  team1ChampionsKills  Int
+  team1DragonKills     Int
+  team1InhibitorKills  Int
+  team1RiftHeraldKills Int
+  team1TowerKills      Int
+  team1BanChampionId   Int[]
+  teamWinId            Int
+  matchPlayer          MatchPlayer[]
+}
+
+model MatchPlayer {
+  id                             Int     @id @default(autoincrement())
+  match                          Match   @relation(fields: [matchId], references: [matchId])
+  matchId                        String
+  puuid                          String
+  playerNum                      Int
+  allInPings                     Int
+  assistMePings                  Int
+  assists                        Int
+  baitPings                      Int
+  baronKills                     Int
+  basicPings                     Int
+  bountyLevel                    Int
+  challenges                     Json?
+  champExperience                Int
+  champLevel                     Int
+  championId                     Int
+  championName                   String
+  championTransform              Int
+  commandPings                   Int
+  consumablesPurchased           Int
+  damageDealtToBuildings         Int
+  damageDealtToObjectives        Int
+  damageDealtToTurrets           Int
+  damageSelfMitigated            Int
+  dangerPings                    Int
+  deaths                         Int
+  detectorWardsPlaced            Int
+  doubleKills                    Int
+  dragonKills                    Int
+  eligibleForProgression         Boolean
+  enemyMissingPings              Int
+  enemyVisionPings               Int
+  firstBloodAssist               Boolean
+  firstBloodKill                 Boolean
+  firstTowerAssist               Boolean
+  firstTowerKill                 Boolean
+  gameEndedInEarlySurrender      Boolean
+  gameEndedInSurrender           Boolean
+  getBackPings                   Int
+  goldEarned                     Int
+  goldSpent                      Int
+  holdPings                      Int
+  individualPosition             String
+  inhibitorKills                 Int
+  inhibitorTakedowns             Int
+  inhibitorsLost                 Int
+  item0                          Int
+  item1                          Int
+  item2                          Int
+  item3                          Int
+  item4                          Int
+  item5                          Int
+  item6                          Int
+  itemsPurchased                 Int
+  killingSprees                  Int
+  kills                          Int
+  lane                           String
+  largestCriticalStrike          Int
+  largestKillingSpree            Int
+  largestMultiKill               Int
+  longestTimeSpentLiving         Int
+  magicDamageDealt               Int
+  magicDamageDealtToChampions    Int
+  magicDamageTaken               Int
+  needVisionPings                Int
+  neutralMinionsKilled           Int
+  nexusKills                     Int
+  nexusLost                      Int
+  nexusTakedowns                 Int
+  objectivesStolen               Int
+  objectivesStolenAssists        Int
+  onMyWayPings                   Int
+  participantId                  Int
+  pentaKills                     Int
+  runePrimary1                   Int
+  runePrimary2                   Int
+  runePrimary3                   Int
+  runePrimary4                   Int
+  runeSecondary1                 Int
+  runeSecondary2                 Int
+  runeStatFlex                   Int
+  runeStatdefense                Int
+  runeStatOffenes                Int
+  physicalDamageDealt            Int
+  physicalDamageDealtToChampions Int
+  physicalDamageTaken            Int
+  placement                      Int
+  playerAugment1                 Int
+  playerAugment2                 Int
+  playerAugment3                 Int
+  playerAugment4                 Int
+  playerSubteamId                Int
+  profileIcon                    Int
+  pushPings                      Int
+  quadraKills                    Int
+  riotIdName                     String
+  riotIdTagline                  String
+  role                           String
+  sightWardsBoughtInGame         Int
+  spell1Casts                    Int
+  spell2Casts                    Int
+  spell3Casts                    Int
+  spell4Casts                    Int
+  subteamPlacement               Int
+  summoner1Casts                 Int
+  summoner1Id                    Int
+  summoner2Casts                 Int
+  summoner2Id                    Int
+  summonerId                     String
+  summonerLevel                  Int
+  summonerName                   String
+  teamEarlySurrendered           Boolean
+  teamId                         Int
+  teamPosition                   String
+  timeCCingOthers                Int
+  timePlayed                     Int
+  totalAllyJungleMinionsKilled   Int
+  totalDamageDealt               Int
+  totalDamageDealtToChampions    Int
+  totalDamageShieldedOnTeammates Int
+  totalDamageTaken               Int
+  totalEnemyJungleMinionsKilled  Int
+  totalHeal                      Int
+  totalHealsOnTeammates          Int
+  totalMinionsKilled             Int
+  totalTimeCCDealt               Int
+  totalTimeSpentDead             Int
+  totalUnitsHealed               Int
+  tripleKills                    Int
+  trueDamageDealt                Int
+  trueDamageDealtToChampions     Int
+  trueDamageTaken                Int
+  turretKills                    Int
+  turretTakedowns                Int
+  turretsLost                    Int
+  unrealKills                    Int
+  visionClearedPings             Int
+  visionScore                    Int
+  visionWardsBoughtInGame        Int
+  wardsKilled                    Int
+  wardsPlaced                    Int
+  win                            Boolean
+}
 
 model Mastery {
   puuid                        String

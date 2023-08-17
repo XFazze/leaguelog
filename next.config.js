@@ -5,7 +5,7 @@ const nextConfig = {
   },
   output: 'standalone',
   images: {
-    remotePatterns: [{ hostname: 'raw.communitydragon.org' }],
+    remotePatterns: [{ hostname: 'raw.communitydragon.org' }, { hostname: 'ddragon.leagueoflegends.com' }],
   },
 };
 

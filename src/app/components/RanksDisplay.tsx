@@ -2,7 +2,7 @@ import { get_ranks_by_summonerId } from '@/lib/riotApi';
 import { Rank } from '@prisma/client';
 
 export default async function RanksDisplay({ region, id }: { region: string; id: string }) {
-  const ranks: [Rank] = await get_ranks_by_summonerId(region, id);
+  const ranks: Rank[] = await get_ranks_by_summonerId(region, id);
   var solo, flex;
   ranks.forEach((rank) => {
     if (rank.queueType == 'RANKED_SOLO_5x5') {

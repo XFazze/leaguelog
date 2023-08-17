@@ -9,9 +9,9 @@ export default async function MasteryDisplay({ region, puuid }: { region: string
     <div className="flex-col">
       <p>Masteries</p>
       <div></div>
-      {masteries.map((mastery: Mastery) => (
-        <div key={mastery.championId}>{mastery.championId}</div>
-      ))}
+      {/* {masteries.map((mastery: Mastery) => ( */}
+      {/* <div key={mastery.championId}>{mastery.championId}</div> */}
+      {/* ))} */}
     </div>
   );
 }

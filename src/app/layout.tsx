@@ -8,11 +8,11 @@ const spiegel = localFont({
     { path: './fonts/spiegel-regular.woff2', weight: '400', style: 'normal' },
     { path: './fonts/spiegel-bold.woff2', weight: '400', style: 'bold' },
   ],
-  variable: '--font-surt-bold',
+  variable: '--font-spiegel',
 });
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={spiegel.className}>
+    <html lang="en" className={`${spiegel.variable} font-sans`}>
       {/*
         <head /> will contain the components returned by the nearest parent
         head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head

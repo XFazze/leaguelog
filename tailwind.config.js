@@ -6,4 +6,11 @@ module.exports = {
     extend: {},
   },
   plugins: [],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['var(--font-spiegel)'],
+      },
+    },
+  },
 };

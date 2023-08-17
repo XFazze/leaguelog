@@ -30,8 +30,8 @@ export default function SearcBar() {
       >
         {Object.keys(RegionNames).map((region) => {
           return (
-            <option value={region} className="pointer" key={region}>
-              {region}
+            <option value={region} className="pointer text-center" key={region}>
+              <p>{region}</p>
             </option>
           );
         })}
