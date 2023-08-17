@@ -26,9 +26,6 @@ export async function get_rune_name_from_id(id: number): Promise<string | null> 
 }
 
 export async function get_item_name_from_id(id: number): Promise<string | null> {
-    if (id === 0) {
-        return "gp_ui_placeholder.png"
-    }
     const response = await fetch(`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/items.json`)
     if (!response.ok) {
         return "1001_Class_T1_BootsofSpeed.png"
@@ -36,8 +33,19 @@ export async function get_item_name_from_id(id: number): Promise<string | null> 
     var items_json: any = await response.json()
     var found = items_json.find((item: { id: number }) => id === item.id)!;
     if (!found) {
-        console.log("hmm", id)
         return null
     }
     return found.iconPath.slice(43)
+}
+export async function get_augment_name_from_id(id: number): Promise<string | null> {
+    const response = await fetch(`https://raw.communitydragon.org/latest/cdragon/arena/en_us.json`)
+    if (!response.ok) {
+        return "phenomenalevil_large.2v2_mode_fighters.png"
+    }
+    var augment_json: any = await response.json()
+    var found = augment_json.augments.find((augment: { id: number }) => id === augment.id)!;
+    if (!found) {
+        return null
+    }
+    return found.iconSmall.slice(32)
 }

@@ -11,12 +11,17 @@ export const RegionNames: Record<string, string> = {
 }
 export function prestige_border(level: number) {
     // var level = level % 25;
+    if (level > 500) {
+        level = 500
+    }
+
     var level_stage: string = pad(level - level % 25, 3)
     if (level_stage == "000") {
         level_stage = "001"
     } else if (level_stage == "175") {
         level_stage = "175.lvl_borderfix"
     }
+
     return level_stage
 }
 
@@ -36,6 +41,7 @@ export const LargeRegionsConverter: Record<string, string> = {
     OC: "europe",
     TR: "europe"
 }
+
 
 export const QueueTypeConverter: Record<string, string> = {
     400: "Draft",
@@ -58,3 +64,17 @@ export const QueueTypeConverter: Record<string, string> = {
 
 }
 
+export const TeamPostistions = ["TOP", "JUNGLE", "MIDDLE", "BOTTOM", "UTILITY"]
+export const PlatformIdToRegion: Record<string, string> = {
+    eun1: 'EUNE',
+    euw1: 'EUW',
+    kr: 'KR',
+    na1: 'NA',
+    br1: 'BR',
+    la1: 'LAN',
+    la2: 'LAS',
+    oc1: 'OCE',
+    ru: 'RU',
+    tr1: 'TR',
+    jp1: 'JA'
+}

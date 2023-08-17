@@ -12,7 +12,7 @@ export default async function RanksDisplay({ region, id }: { region: string; id:
     }
   });
   return (
-    <div className=" flex flex-col">
+    <div className=" flex flex-col p-2">
       <SingleRankDisplay rank={solo} name="Soloq" />
       <SingleRankDisplay rank={flex} name="Flex" />
     </div>

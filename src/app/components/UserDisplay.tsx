@@ -3,7 +3,7 @@ import Image from 'next/image';
 export default function UserDisplay(props: any) {
   const user = props.user;
   return (
-    <div className="flex flex-col content-center">
+    <div className="flex flex-col content-center p-2">
       <div>
         <h1 className="text-xl">{user.name}</h1>
       </div>

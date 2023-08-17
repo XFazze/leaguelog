@@ -27,7 +27,7 @@ export default async function page({
   }
   var large_region = LargeRegionsConverter[params.region];
   return (
-    <div className="flex flex-row gap-8 ">
+    <div className="flex flex-row gap-8 justify-center">
       <div className="flex flex-row  gap-4 backdrop-brightness-75 p-1 rounded-md self-start">
         <Suspense fallback={<div>Profile loading...</div>}>
           <UserDisplay user={user} />
