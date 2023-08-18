@@ -3,7 +3,7 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
-  output: 'standalone',
+  // output: 'standalone',
   images: {
     remotePatterns: [{ hostname: 'raw.communitydragon.org' }, { hostname: 'ddragon.leagueoflegends.com' }],
   },

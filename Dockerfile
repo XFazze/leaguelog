@@ -7,7 +7,7 @@ RUN  npm ci
 
 COPY . .
 
-RUN npx prisma migrate deploy
+# RUN npx prisma migrate deploy
 RUN npm run build
 
 # Abort if secret enviorment variables doesnt exist
@@ -21,4 +21,4 @@ ENV NODE_ENV production
 
 EXPOSE 3000
 
-CMD ["node",".next/standalone/server.js"]
+CMD ["npm","run", "start"]
