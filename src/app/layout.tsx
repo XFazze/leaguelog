@@ -1,4 +1,4 @@
-import './globals.css';
+import '../styles/globals.css';
 import localFont from 'next/font/local';
 import Link from 'next/link';
 import SearchBar from './components/SearchBar';
@@ -18,6 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
       <head />
+
       <body className="bg-cyan-950">
         <div className="flex-col ">
           <div
