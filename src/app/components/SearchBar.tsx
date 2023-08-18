@@ -49,7 +49,7 @@ export default function SearcBar() {
         style={{ ['--text-size' as any]: '0.9rem', ['--margin' as any]: '0.2rem' }}
         onChange={(e) => {
           set_username(e.target.value);
-          router.prefetch(`/user/${region}/${username}`);
+          // router.prefetch(`/user/${region}/${username}`);
         }}
       />
       <button

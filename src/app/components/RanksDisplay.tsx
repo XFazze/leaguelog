@@ -3,7 +3,8 @@ import { Rank } from '@prisma/client';
 
 export default async function RanksDisplay({ region, id }: { region: string; id: string }) {
   const ranks: Rank[] = await get_ranks_by_summonerId(region, id);
-  var solo, flex;
+  var solo = null;
+  var flex = null;
   ranks.forEach((rank) => {
     if (rank.queueType == 'RANKED_SOLO_5x5') {
       solo = rank;
@@ -11,8 +12,11 @@ export default async function RanksDisplay({ region, id }: { region: string; id:
       flex = rank;
     }
   });
+  if (solo === null && flex === null) {
+    <div></div>;
+  }
   return (
-    <div className=" flex flex-col p-2">
+    <div className=" flex flex-col p-2 m-2 backdrop-brightness-90 self-start ">
       <SingleRankDisplay rank={solo} name="Soloq" />
       <SingleRankDisplay rank={flex} name="Flex" />
     </div>

@@ -144,13 +144,11 @@ export async function Augments({ curret_player_match }: { curret_player_match: M
   }
   var size = 24;
   return (
-    <div className="flex flex-col scale-90">
-      <div className="flex flex-row gap-1">
-        <Augment augment_name={augment1_name} size={size}></Augment>
-        <Augment augment_name={augment2_name} size={size}></Augment>
-        <Augment augment_name={augment3_name} size={size}></Augment>
-        <Augment augment_name={augment4_name} size={size}></Augment>
-      </div>
+    <div className="flex flex-row scale-90 gap-1 items-center">
+      <Augment augment_name={augment1_name} size={size}></Augment>
+      <Augment augment_name={augment2_name} size={size}></Augment>
+      <Augment augment_name={augment3_name} size={size}></Augment>
+      <Augment augment_name={augment4_name} size={size}></Augment>
     </div>
   );
 }
@@ -315,6 +313,113 @@ function TeamRow({
                 <p className="text-base">{player_match.puuid === curret_player_match.puuid ? 'P' : ''}</p>
               </div>
             </a>
+          </div>
+        ))}
+    </div>
+  );
+}
+export function SmallMatch({
+  match,
+  curret_player_match,
+  enemy_lane,
+}: {
+  match: Match;
+  curret_player_match: MatchPlayer;
+  enemy_lane: MatchPlayer | null;
+}) {
+  return (
+    <div className={`grid grid-cols-[120px_600px_110px] auto-cols-min  rounded-sm`}>
+      <Meta match={match} curret_player_match={curret_player_match}></Meta>
+      <SmallPlayer curret_player_match={curret_player_match} match={match} enemy_lane={enemy_lane}></SmallPlayer>
+
+      <TeamSmall curret_player_match={curret_player_match} match={match}></TeamSmall>
+    </div>
+  );
+}
+function SmallPlayer({
+  match,
+  curret_player_match,
+  enemy_lane,
+}: {
+  match: Match;
+  curret_player_match: MatchPlayer;
+  enemy_lane: MatchPlayer | null;
+}) {
+  return (
+    <div className="grid grid-cols-[80px_80px_100px_70px_110px_110px] auto-cols-min ">
+      <KDA match={match} curret_player_match={curret_player_match}></KDA>
+      <Suspense fallback={<p>Summoner spells</p>}>
+        {/* @ts-expect-error Server Component */}
+        <Champion curret_player_match={curret_player_match}></Champion>
+      </Suspense>
+      <Suspense fallback={<p>Items...</p>}>
+        {/* @ts-expect-error Server Component */}
+        <Items curret_player_match={curret_player_match}></Items>
+      </Suspense>
+      <Gold curret_player_match={curret_player_match} enemy_lane={enemy_lane}></Gold>
+      <div>
+        <Suspense fallback={<p>Runes...</p>}>
+          {/* @ts-expect-error Server Component */}
+          <Runes curret_player_match={curret_player_match}></Runes>
+        </Suspense>
+        <Suspense fallback={<p>Augments...</p>}>
+          {/* @ts-expect-error Server Component */}
+          <Augments curret_player_match={curret_player_match}></Augments>
+        </Suspense>
+      </div>
+      <CSVision curret_player_match={curret_player_match} match={match}></CSVision>
+    </div>
+  );
+}
+
+export function LargeMatch({ match, curret_player_match }: { match: any; curret_player_match: MatchPlayer }) {
+  return (
+    <div id={`Large_${match.matchId}`} className={`hidden flex flex-col`}>
+      {match.matchPlayer
+        .filter((player_match: any) => player_match.teamId === curret_player_match.teamId)
+        .map((player: MatchPlayer) => (
+          <div
+            key={player.puuid}
+            className={`${player.win ? 'bg-green-800' : 'bg-red-800'} grid grid-cols-[120px_500px]`}
+          >
+            <div className="flex flex-col  justify-center whitespace-nowrap">
+              <p>{player.summonerName}</p>
+              <p>{player.summonerLevel}lvl</p>
+            </div>
+            <SmallPlayer
+              key={player.puuid}
+              curret_player_match={player}
+              match={match}
+              enemy_lane={
+                match.matchPlayer.find(
+                  (player2: MatchPlayer) =>
+                    player2.teamPosition === curret_player_match.teamPosition && player2.puuid !== player.puuid
+                ) || null
+              }
+            />
+          </div>
+        ))}
+      {match.matchPlayer
+        .filter((player_match: any) => player_match.teamId !== curret_player_match.teamId)
+        .map((player: MatchPlayer) => (
+          <div
+            key={player.puuid}
+            className={`${player.win ? 'bg-green-800' : 'bg-red-800'} grid grid-cols-[120px_500px]`}
+          >
+            <div className="flex flex-col justify-center items-center whitespace-nowrap">
+              <p>{player.summonerName}</p>
+              <p>{player.summonerLevel}lvl</p>
+            </div>
+            <SmallPlayer
+              curret_player_match={player}
+              match={match}
+              enemy_lane={
+                match.matchPlayer.find(
+                  (player2: MatchPlayer) =>
+                    player2.teamPosition === curret_player_match.teamPosition && player2.puuid !== player.puuid
+                ) || null
+              }
+            />
           </div>
         ))}
     </div>

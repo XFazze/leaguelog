@@ -23,12 +23,6 @@ model User {
   summonerLevel Int
 }
 
-model Ratelimit {
-  id   Int      @id @default(autoincrement())
-  type String
-  date DateTime @default(now())
-}
-
 model Rank {
   id           Int      @id @default(autoincrement())
   createdAt    DateTime @default(now())
@@ -98,6 +92,8 @@ model MatchPlayer {
   match                          Match   @relation(fields: [matchId], references: [matchId])
   matchId                        String
   puuid                          String
+  gameDuration                   Int
+  queueId                        Int
   playerNum                      Int
   allInPings                     Int
   assistMePings                  Int
@@ -180,12 +176,12 @@ model MatchPlayer {
   physicalDamageDealt            Int
   physicalDamageDealtToChampions Int
   physicalDamageTaken            Int
-  placement                      Int
-  playerAugment1                 Int
-  playerAugment2                 Int
-  playerAugment3                 Int
-  playerAugment4                 Int
-  playerSubteamId                Int
+  placement                      Int?
+  playerAugment1                 Int?
+  playerAugment2                 Int?
+  playerAugment3                 Int?
+  playerAugment4                 Int?
+  playerSubteamId                Int?
   profileIcon                    Int
   pushPings                      Int
   quadraKills                    Int
@@ -197,7 +193,7 @@ model MatchPlayer {
   spell2Casts                    Int
   spell3Casts                    Int
   spell4Casts                    Int
-  subteamPlacement               Int
+  subteamPlacement               Int?
   summoner1Casts                 Int
   summoner1Id                    Int
   summoner2Casts                 Int

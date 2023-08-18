@@ -1,8 +1,8 @@
 import { get_match_by_matchId, get_matchhistory_by_puuid } from '@/lib/riotApi';
 import { Suspense } from 'react';
-import { Meta, KDA, Champion, Gold, Items, Runes, Augments, CSVision, TeamSmall } from './PlayerMatch';
-import { TeamPostistions } from '@/lib/gameConstants';
-import { Match, MatchPlayer } from '@prisma/client';
+import { LargeMatch, SmallMatch } from './MatchDisplay';
+import React from 'react';
+import MatchControl from './MatchControl';
 
 export default async function MatchHistoryDisplay({ large_region, puuid }: { large_region: string; puuid: string }) {
   var match_history = await get_matchhistory_by_puuid(large_region, puuid);
@@ -10,7 +10,7 @@ export default async function MatchHistoryDisplay({ large_region, puuid }: { lar
   return (
     <div className="flex flex-col gap-4">
       {match_history.matches.map((matchId: string) => (
-        <Suspense key={'match:' + matchId} fallback={<div>Match loading...</div>}>
+        <Suspense key={'match:' + matchId} fallback={<div className="h-12">Match loading...</div>}>
           {/* @ts-expect-error Server Component */}
           <MatchDisplay large_region={large_region} id={matchId} puuid={puuid} />
         </Suspense>
@@ -35,32 +35,13 @@ export default async function MatchHistoryDisplay({ large_region, puuid }: { lar
     var background_color = curret_player_match.win ? 'bg-green-800' : 'bg-red-800';
 
     return (
-      <div
-        className={`grid grid-cols-[100px_100px_80px_100px_90px_110px_110px_110px] auto-cols-min ${background_color} rounded-sm`}
-      >
-        <Meta match={match} curret_player_match={curret_player_match}></Meta>
-        <KDA match={match} curret_player_match={curret_player_match}></KDA>
-        <Suspense fallback={<p>Summoner spells</p>}>
-          {/* @ts-expect-error Server Component */}
-          <Champion curret_player_match={curret_player_match}></Champion>
-        </Suspense>
-        <Suspense fallback={<p>Items...</p>}>
-          {/* @ts-expect-error Server Component */}
-          <Items curret_player_match={curret_player_match}></Items>
-        </Suspense>
-        <Gold curret_player_match={curret_player_match} enemy_lane={enemy_lane}></Gold>
-        <div>
-          <Suspense fallback={<p>Runes...</p>}>
-            {/* @ts-expect-error Server Component */}
-            <Runes curret_player_match={curret_player_match}></Runes>
-          </Suspense>
-          <Suspense fallback={<p>Runes...</p>}>
-            {/* @ts-expect-error Server Component */}
-            <Augments curret_player_match={curret_player_match}></Augments>
-          </Suspense>
+      <div className="flex flex-col justify-center text-center gap-2">
+        <div className={`flex flex-row ${background_color}`}>
+          <MatchControl matchId={match.matchId}>
+            <SmallMatch curret_player_match={curret_player_match} match={match} enemy_lane={enemy_lane} />
+          </MatchControl>
         </div>
-        <CSVision curret_player_match={curret_player_match} match={match}></CSVision>
-        <TeamSmall curret_player_match={curret_player_match} match={match}></TeamSmall>
+        <LargeMatch curret_player_match={curret_player_match} match={match} />
       </div>
     );
   }
