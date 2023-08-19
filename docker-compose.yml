@@ -5,23 +5,22 @@ services:
     env_file:
       - .env
       - .env.local
-    restart:
-      unless-stopped
+    restart: unless-stopped
     depends_on:
-      postgres: 
+      db:
         condition: service_healthy
     ports:
-      - "3001:3000"
-    
-  postgres:
+      - '3001:3000'
+
+  db:
     image: postgres
     restart: always
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready", "-d", "db_prod"]
+      test: [ 'CMD-SHELL', 'pg_isready', '-d', 'db_prod' ]
       interval: 30s
       timeout: 60s
       retries: 5
-      start_period: 80s  
+      start_period: 80s
     env_file:
       - .env
       - .env.local
@@ -29,7 +28,7 @@ services:
     #   - POSTGRES_USER=postgres
     #   - POSTGRES_PASSWORD=postgres
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - postgres:${PGDATA}
 volumes:

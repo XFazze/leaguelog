@@ -318,11 +318,8 @@ export async function get_mastery_by_puuid(region: string = '', puuid: string = 
 async function request_riot<T>(type: string, url: string, params: { [name: string]: any } = {}): Promise<T | null> {
   console.log(`riot request:${url} params:${Object.entries(params)}`);
 
-  console.log('waiting for small', type);
   await ratelimitSmall.wait_for_turn();
-  console.log('waiting for large', type);
   await ratelimitLarge.wait_for_turn();
-  console.log('released', type);
   params['api_key'] = process.env.RIOT_KEY;
   const response = await fetch('https://' + url + '?' + new URLSearchParams(params), {
     next: { revalidate: 10 },

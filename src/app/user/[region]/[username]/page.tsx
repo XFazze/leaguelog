@@ -16,11 +16,13 @@ export default async function page({
   // prisma.$connect();
   const user = await get_user_by_username(params.region, decodeURIComponent(params.username));
   if (user === null) {
-    <div>
-      <p>
-        User {params.username} doesnt exist on region {params.region}
-      </p>
-    </div>;
+    return (
+      <div>
+        <p>
+          User {params.username} doesnt exist on region {params.region}
+        </p>
+      </div>
+    );
   }
   var large_region = LargeRegionsConverter[params.region];
   return (
@@ -31,16 +33,13 @@ export default async function page({
             <UserDisplay user={user} />
           </Suspense>
           <Suspense fallback={<div>Ranks loading...</div>}>
-            {/* @ts-expect-error Server Component */}
             <RanksDisplay region={params.region} id={user.id} />
           </Suspense>
         </div>
         <Suspense fallback={<div>Ranks loading...</div>}>
-          {/* @ts-expect-error Server Component */}
           <ChampionsStatistics puuid={user.puuid} />
         </Suspense>
       </div>
-      {/* @ts-expect-error Server Component */}
       <LargeDisplay large_region={large_region} region={params.region} puuid={user.puuid} />
     </div>
   );

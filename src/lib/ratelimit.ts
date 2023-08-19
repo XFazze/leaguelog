@@ -15,8 +15,10 @@ class Ratelimit {
     var new_time =
       oldest_time + this.time_interval_in_ms > time_now ? oldest_time + this.time_interval_in_ms : time_now;
     this.slots.push(new_time);
-    console.log('wait for', (new_time - time_now) / 1000, ' seconds');
-    await delay((new_time - time_now) / 1000);
+    if (new_time !== time_now) {
+      console.log('wait for', new_time - time_now, ' ms');
+      await delay((new_time - time_now) / 1000);
+    }
     return;
   }
 }

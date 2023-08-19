@@ -11,7 +11,6 @@ export default async function MatchHistoryDisplay({ large_region, puuid }: { lar
     <div className="flex flex-col gap-4">
       {match_history.matches.map((matchId: string) => (
         <Suspense key={'match:' + matchId} fallback={<div className="h-12">Match loading...</div>}>
-          {/* @ts-expect-error Server Component */}
           <MatchDisplay large_region={large_region} id={matchId} puuid={puuid} />
         </Suspense>
       ))}

@@ -41,18 +41,19 @@ export function KDA({ match, curret_player_match }: { match: Match; curret_playe
   return (
     <div className="flex flex-col text-center  justify-center">
       <p title="Kda">
-        {curret_player_match.kills}/{curret_player_match.deaths}/{curret_player_match.assists}(
+        {curret_player_match.kills}/{curret_player_match.deaths}/{curret_player_match.assists}
+        {/* (
         {Math.floor((10 * (curret_player_match.assists + curret_player_match.kills)) / curret_player_match.deaths) / 10}
-        )
+        ) */}
       </p>
-      <p title="Kill participation">
+      {/* <p title="Kill participation">
         {Math.floor(
           ((curret_player_match.kills + curret_player_match.assists) /
             (curret_player_match.teamId === 0 ? match.team0ChampionsKills : match.team1ChampionsKills)) *
             10
         ) * 10}
         %kp
-      </p>
+      </p> */}
     </div>
   );
 }
@@ -104,7 +105,7 @@ export async function Runes({ curret_player_match }: { curret_player_match: Matc
   var rune_stat_defense_name = await get_rune_name_from_id(curret_player_match.runeStatdefense);
   var rune_stat_offense_name = await get_rune_name_from_id(curret_player_match.runeStatOffenes);
   if (!rune_primary_1_name) {
-    return <div></div>;
+    return;
   }
   var rune_size = 24;
   var stat_size = 20;
@@ -140,7 +141,7 @@ export async function Augments({ curret_player_match }: { curret_player_match: M
   var augment3_name = await get_augment_name_from_id(curret_player_match.playerAugment3);
   var augment4_name = await get_augment_name_from_id(curret_player_match.playerAugment4);
   if (!augment1_name) {
-    return <div></div>;
+    return;
   }
   var size = 24;
   return (
@@ -346,28 +347,21 @@ function SmallPlayer({
   enemy_lane: MatchPlayer | null;
 }) {
   return (
-    <div className="grid grid-cols-[80px_80px_100px_70px_110px_110px] auto-cols-min ">
+    <div className="grid grid-cols-[80px_80px_100px_70px_110px] auto-cols-min ">
       <KDA match={match} curret_player_match={curret_player_match}></KDA>
       <Suspense fallback={<p>Summoner spells</p>}>
-        {/* @ts-expect-error Server Component */}
+        {}
         <Champion curret_player_match={curret_player_match}></Champion>
       </Suspense>
       <Suspense fallback={<p>Items...</p>}>
-        {/* @ts-expect-error Server Component */}
         <Items curret_player_match={curret_player_match}></Items>
       </Suspense>
-      <Gold curret_player_match={curret_player_match} enemy_lane={enemy_lane}></Gold>
-      <div>
-        <Suspense fallback={<p>Runes...</p>}>
-          {/* @ts-expect-error Server Component */}
-          <Runes curret_player_match={curret_player_match}></Runes>
-        </Suspense>
-        <Suspense fallback={<p>Augments...</p>}>
-          {/* @ts-expect-error Server Component */}
-          <Augments curret_player_match={curret_player_match}></Augments>
-        </Suspense>
-      </div>
-      <CSVision curret_player_match={curret_player_match} match={match}></CSVision>
+      {/* <Gold curret_player_match={curret_player_match} enemy_lane={enemy_lane}></Gold> */}
+      <Suspense fallback={<p>Runes...</p>}>
+        <Runes curret_player_match={curret_player_match}></Runes>
+        <Augments curret_player_match={curret_player_match}></Augments>
+      </Suspense>
+      {/* <CSVision curret_player_match={curret_player_match} match={match}></CSVision> */}
     </div>
   );
 }
@@ -425,3 +419,5 @@ export function LargeMatch({ match, curret_player_match }: { match: any; curret_
     </div>
   );
 }
+
+//
