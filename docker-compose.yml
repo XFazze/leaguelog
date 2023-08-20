@@ -1,7 +1,9 @@
-version: '3'
+version: '3.4'
 services:
   web:
-    build: '.'
+    build: 
+      context: '.'
+      # network: host
     env_file:
       - .env
       - .env.local
@@ -11,7 +13,7 @@ services:
         condition: service_healthy
     ports:
       - '3001:3000'
-
+    # network_mode: host
   db:
     image: postgres
     restart: always

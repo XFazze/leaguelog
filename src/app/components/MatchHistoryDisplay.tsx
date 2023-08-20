@@ -26,10 +26,10 @@ export default async function MatchHistoryDisplay({ large_region, puuid }: { lar
         </div>
       );
     }
-    var curret_player_match = match.matchPlayer.find((player) => player.puuid === puuid)!;
+    var curret_player_match = match.matchPlayer.find((player:any) => player.puuid === puuid)!;
     var enemy_lane =
       match.matchPlayer.find(
-        (player) => player.teamPosition === curret_player_match.teamPosition && player.puuid !== puuid
+        (player:any) => player.teamPosition === curret_player_match.teamPosition && player.puuid !== puuid
       ) || null;
 
     return (

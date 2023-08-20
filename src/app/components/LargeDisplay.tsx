@@ -20,7 +20,6 @@ export default function LargeDisplay({
     <div className=" flex flex-col justify-top backdrop-brightness-75 p-2 self-start">
       {/* {children.map((child: React.ReactElement) => ({ child }))} */}
       <Suspense fallback={<div>Match history loading...</div>}>
-        {/* @ts-expect-error Server Component */}
         <MatchHistoryDisplay large_region={large_region} puuid={puuid}></MatchHistoryDisplay>
       </Suspense>
       {/* <MasteryDisplay region={params.region} puuid={user.puuid}></MasteryDisplay> */}

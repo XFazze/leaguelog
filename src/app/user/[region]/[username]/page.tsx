@@ -36,9 +36,9 @@ export default async function page({
             <RanksDisplay region={params.region} id={user.id} />
           </Suspense>
         </div>
-        <SideStatistics puuid={user.puuid}></SideStatistics>
+        {/* <SideStatistics puuid={user.puuid}></SideStatistics> */}
       </div>
-      <LargeDisplay large_region={large_region} region={params.region} puuid={user.puuid} />
+      {/* <LargeDisplay large_region={large_region} region={params.region} puuid={user.puuid} /> */}
     </div>
   );
 }
