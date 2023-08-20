@@ -206,7 +206,7 @@ model MatchPlayer {
   teamPosition                   String
   timeCCingOthers                Int
   timePlayed                     Int
-  totalAllyJungleMinionsKilled   Int
+  totalAllyJungleMinionsKilled   Int?
   totalDamageDealt               Int
   totalDamageDealtToChampions    Int
   totalDamageShieldedOnTeammates Int

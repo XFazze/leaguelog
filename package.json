@@ -7,9 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "tailwatch": "npx tailwindcss -w -i src/styles/input.css -o src/styles/globals.css",
+    "tw": "npx tailwindcss -w -i src/styles/input.css -o src/styles/globals.css",
     "docker-db": "docker compose up db",
-    "db": "npm run docker-db & npm run tailwatch & npx prisma studio"
+    "db": "npm run docker-db & npx prisma studio"
   },
   "dependencies": {
     "@types/node": "20.5.1",

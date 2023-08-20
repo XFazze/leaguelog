@@ -4,7 +4,7 @@ import UserDisplay from '@/app/components/UserDisplay';
 import { get_user_by_username } from '@/lib/riotApi';
 import { Suspense } from 'react';
 import LargeDisplay from '@/app/components/LargeDisplay';
-import { ChampionsStatistics } from '@/app/components/SideStatistics';
+import { SideStatistics } from '@/app/components/SideStatistics';
 
 export default async function page({
   params,
@@ -36,9 +36,7 @@ export default async function page({
             <RanksDisplay region={params.region} id={user.id} />
           </Suspense>
         </div>
-        <Suspense fallback={<div>Ranks loading...</div>}>
-          <ChampionsStatistics puuid={user.puuid} />
-        </Suspense>
+        <SideStatistics puuid={user.puuid}></SideStatistics>
       </div>
       <LargeDisplay large_region={large_region} region={params.region} puuid={user.puuid} />
     </div>

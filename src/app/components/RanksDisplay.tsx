@@ -16,7 +16,7 @@ export default async function RanksDisplay({ region, id }: { region: string; id:
     <div></div>;
   }
   return (
-    <div className=" flex flex-col p-2 m-2 backdrop-brightness-90 self-start ">
+    <div className=" flex flex-col p-2 m-2  gap-2 self-start ">
       <SingleRankDisplay rank={solo} name="Soloq" />
       <SingleRankDisplay rank={flex} name="Flex" />
     </div>
@@ -38,7 +38,7 @@ export default async function RanksDisplay({ region, id }: { region: string; id:
       display_rank = 4;
     }
     return (
-      <div>
+      <div className="backdrop-brightness-75 p-2">
         {rank !== null ? (
           <div>
             <p>{name}</p>

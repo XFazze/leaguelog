@@ -1,13 +1,11 @@
+'use server';
 import { prisma } from '@/lib/prisma';
-import { get_ranks_by_summonerId } from '@/lib/riotApi';
-import { Rank } from '@prisma/client';
-import { match } from 'assert';
 import { Suspense } from 'react';
 import { Icon } from './MatchDisplay';
+import { ChampionsStatisticsControl } from './SideStatisticsControl';
 
-type combination = {
+type champion_statistics = {
   championId: number;
-  queueId: number;
   total: number;
   losses: number;
   totalMinionsKilled: number;
@@ -18,11 +16,18 @@ type combination = {
   goldEarned: number;
   totalDamageDealtToChampions: number;
 };
-export async function ChampionsStatistics({ puuid }: { puuid: string }) {
-  // Champ, gamemode, w/l, cs, k/d/a
+export async function ChampionsStatistics({
+  puuid,
+  queue_ids,
+  queue_id_id,
+}: {
+  puuid: string;
+  queue_ids: number[];
+  queue_id_id: string;
+}) {
   var combinations = await prisma.matchPlayer.groupBy({
-    where: { puuid: puuid },
-    by: ['championId', 'queueId'],
+    where: { puuid: puuid, queueId: { in: queue_ids } },
+    by: ['championId'],
     _count: { _all: true },
     _avg: {
       kills: true,
@@ -34,61 +39,69 @@ export async function ChampionsStatistics({ puuid }: { puuid: string }) {
       totalDamageDealtToChampions: true,
     },
   });
-  var lost_combinations = await prisma.matchPlayer.groupBy({
-    where: { puuid: puuid, win: false },
-    by: ['championId', 'queueId'],
+  var lost_champion_statistic = await prisma.matchPlayer.groupBy({
+    where: { puuid: puuid, win: false, queueId: { in: queue_ids } },
+    by: ['championId'],
     _count: { _all: true },
   });
-  var formatted_combinations: combination[] = [];
+  var formatted_champion_statistics: champion_statistics[] = [];
   for (let i = 0; i < combinations.length; i++) {
-    const combination = combinations[i];
+    const champion_statistic = combinations[i];
 
-    formatted_combinations.push({
-      championId: Math.floor(combination.championId),
-      queueId: combination.queueId,
-      total: combination._count._all,
+    formatted_champion_statistics.push({
+      championId: Math.floor(champion_statistic.championId),
+      total: champion_statistic._count._all,
       losses:
-        lost_combinations.find(
-          (lost_copmbination) =>
-            lost_copmbination.championId === combination.championId && lost_copmbination.queueId === combination.queueId
+        lost_champion_statistic.find(
+          (lost_champion_statistic) => lost_champion_statistic.championId === champion_statistic.championId
         )?._count._all || 0,
-      totalMinionsKilled: Math.floor(combination._avg.totalMinionsKilled || 0),
-      kills: Math.floor(combination._avg.kills || 0),
-      deaths: Math.floor(combination._avg.deaths || 0),
-      assists: Math.floor(combination._avg.assists || 0),
-      gameDuration_in_m: Math.floor(combination._avg.gameDuration || 0 / 6) / 10,
-      goldEarned: Math.floor(combination._avg.goldEarned || 0),
-      totalDamageDealtToChampions: Math.floor(combination._avg.totalDamageDealtToChampions || 0),
+      totalMinionsKilled: Math.floor(champion_statistic._avg.totalMinionsKilled || 0),
+      kills: Math.floor(champion_statistic._avg.kills || 0),
+      deaths: Math.floor(champion_statistic._avg.deaths || 0),
+      assists: Math.floor(champion_statistic._avg.assists || 0),
+      gameDuration_in_m: Math.floor((champion_statistic._avg.gameDuration || 0) / 6) / 10,
+      goldEarned: Math.floor(champion_statistic._avg.goldEarned || 0),
+      totalDamageDealtToChampions: Math.floor(champion_statistic._avg.totalDamageDealtToChampions || 0),
     });
   }
   return (
-    <div className=" flex flex-col gap-2  backdrop-brightness-75 p-2 justify-center rounded-md self-start">
-      {formatted_combinations.map((formatted_combination: combination) => (
-        <Suspense
-          key={formatted_combination.championId * formatted_combination.queueId}
-          fallback={<div className="h-12">Champion loading...</div>}
-        >
-          <ChampionStatistics formatted_combination={formatted_combination} />
-        </Suspense>
-      ))}
+    <div
+      id={`stats_queueId_${queue_id_id}`}
+      className={`${
+        queue_id_id === '420' ? 'flex' : 'hidden'
+      } flex flex-col gap-2  p-2 justify-center rounded-sm self-start`}
+    >
+      {formatted_champion_statistics
+        .sort(function (champion_1, champion_2) {
+          return champion_2.total - champion_1.total;
+        })
+        .map((champion_statistic: champion_statistics) => (
+          <Suspense key={champion_statistic.championId} fallback={<div className="h-12">Champion loading...</div>}>
+            <ChampionStatistics formatted_combination={champion_statistic} />
+          </Suspense>
+        ))}
     </div>
   );
 
-  function ChampionStatistics({ formatted_combination }: { formatted_combination: combination }) {
+  function ChampionStatistics({ formatted_combination }: { formatted_combination: champion_statistics }) {
     return (
-      <div className="grid grid-cols-[52px_44px_44px_40px_60px_60px] [&>*]:flex [&>*]:flex-col [&>*]:justify-center  [&>*]: items-center [&>*]:text-center ps-2 first:pt-2 last:pb-2 backdrop-brightness-90">
+      <div
+        className={` flex flex-row [&>*]:flex [&>*]:flex-col [&>*]:justify-center  [&>*]: items-center [&>*]:text-center rounded-md p-1 backdrop-brightness-75`}
+      >
         <div className="scale-90 overflow-hidden w-12 ">
           <Icon
-            url={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/${formatted_combination.championId}.png`}
+            url={`${process.env.RAW_COMMUNITY_URL}plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/${formatted_combination.championId}.png`}
             size={48}
             alt="Champion icon"
             classes="rounded-lg scale-110"
           ></Icon>
         </div>
-        <div>
+        <div className="w-16">
           <p>
             {formatted_combination.total - formatted_combination.losses}w/{formatted_combination.losses}l
           </p>
+        </div>
+        <div className="w-10">
           <p>
             {Math.floor(
               ((formatted_combination.total - formatted_combination.losses) * 100) / formatted_combination.total
@@ -96,41 +109,43 @@ export async function ChampionsStatistics({ puuid }: { puuid: string }) {
             %
           </p>
         </div>
-        <div>
+        <div className="w-14">
           <p>
             {formatted_combination.kills}/{formatted_combination.deaths}/{formatted_combination.assists}
           </p>
-          <p>
-            {Math.floor(
-              (10 * (formatted_combination.assists + formatted_combination.kills)) / formatted_combination.deaths
-            ) / 10}
-            kda
-          </p>
         </div>
-        <div>
-          <p>{formatted_combination.totalMinionsKilled}cs</p>
+        <div className="w-14">
           <p>
             {Math.floor((10 * formatted_combination.totalMinionsKilled) / formatted_combination.gameDuration_in_m) / 10}
             cs/m
           </p>
         </div>
-        <div>
-          <p>{Math.floor(formatted_combination.goldEarned / 1000)}k gold</p>
+        {/* <div>
           <p>
             {Math.floor(formatted_combination.goldEarned / formatted_combination.gameDuration_in_m)}
             k/m
           </p>
         </div>
         <div>
-          <p>{Math.floor(formatted_combination.totalDamageDealtToChampions / 1000)}k dmg</p>
           <p>
             {Math.floor(
               formatted_combination.totalDamageDealtToChampions / 10 / formatted_combination.gameDuration_in_m
             ) / 10}
             k/m
-          </p>
-        </div>
+          </p> 
+        </div>*/}
       </div>
     );
   }
+}
+export async function SideStatistics({ puuid }: { puuid: string }) {
+  return (
+    <div className="p-2">
+      <ChampionsStatisticsControl puuid={puuid}>
+        <ChampionsStatistics puuid={puuid} queue_ids={[420]} queue_id_id="420"></ChampionsStatistics>
+        <ChampionsStatistics puuid={puuid} queue_ids={[440]} queue_id_id="440"></ChampionsStatistics>
+        <ChampionsStatistics puuid={puuid} queue_ids={[400, 420, 440, 700]} queue_id_id="0"></ChampionsStatistics>
+      </ChampionsStatisticsControl>
+    </div>
+  );
 }

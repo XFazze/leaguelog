@@ -31,11 +31,10 @@ export default async function MatchHistoryDisplay({ large_region, puuid }: { lar
       match.matchPlayer.find(
         (player) => player.teamPosition === curret_player_match.teamPosition && player.puuid !== puuid
       ) || null;
-    var background_color = curret_player_match.win ? 'bg-green-800' : 'bg-red-800';
 
     return (
-      <div className="flex flex-col justify-center text-center gap-2">
-        <div className={`flex flex-row ${background_color}`}>
+      <div className="flex flex-col justify-center text-center gap-2  ">
+        <div className={`flex flex-row backdrop-brightness-75 p-1 rounded-sm`}>
           <MatchControl matchId={match.matchId}>
             <SmallMatch curret_player_match={curret_player_match} match={match} enemy_lane={enemy_lane} />
           </MatchControl>

@@ -272,7 +272,7 @@ export async function get_match_by_matchId(large_region: string = '', id: string
         teamPosition: player_data.teamPosition,
         timeCCingOthers: player_data.timeCCingOthers,
         timePlayed: player_data.timePlayed,
-        totalAllyJungleMinionsKilled: player_data.totalAllyJungleMinionsKilled,
+        totalAllyJungleMinionsKilled: player_data.totalAllyJungleMinionsKilled || null,
         totalDamageDealt: player_data.totalDamageDealt,
         totalDamageDealtToChampions: player_data.totalDamageDealtToChampions,
         totalDamageShieldedOnTeammates: player_data.totalDamageShieldedOnTeammates,

@@ -11,7 +11,7 @@ export default function UserDisplay(props: any) {
         <div className="relative h-32">
           <Image
             className="absolute z-10 scale-50"
-            src={`${process.env.RAW_COMMUNITY_URL}${process.env.PATCH}/game/assets/ux/summonericons/profileicon${user.profileIconId}.png`}
+            src={`${process.env.RAW_COMMUNITY_URL}/game/assets/ux/summonericons/profileicon${user.profileIconId}.png`}
             alt="profile-pic"
             width={160}
             height={160}
@@ -20,7 +20,7 @@ export default function UserDisplay(props: any) {
             className="absolute z-10 scale-125 "
             src={`${
               process.env.RAW_COMMUNITY_URL
-            }/latest/game/assets/loadouts/regalia/crests/prestige/prestige_crest_lvl_${prestige_border(
+            }game/assets/loadouts/regalia/crests/prestige/prestige_crest_lvl_${prestige_border(
               user.summonerLevel
             )}.png`}
             alt="profile-pic-border"
