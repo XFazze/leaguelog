@@ -3,7 +3,7 @@ services:
   web:
     build: 
       context: '.'
-      # network: host
+      network: host
     env_file:
       - .env
       - .env.local
@@ -13,7 +13,8 @@ services:
         condition: service_healthy
     ports:
       - '3001:3000'
-    # network_mode: host
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   db:
     image: postgres
     restart: always
