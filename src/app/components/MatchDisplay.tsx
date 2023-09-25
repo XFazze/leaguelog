@@ -121,7 +121,7 @@ export async function Runes({ curret_player_match }: { curret_player_match: Matc
     return;
   }
   var rune_primary_2_url = await get_rune_url_from_id(curret_player_match.runePrimary2);
-  var rune_primary_3_url = await get_rune_url_from_id(curret_player_match.runePrimary2);
+  var rune_primary_3_url = await get_rune_url_from_id(curret_player_match.runePrimary3);
   var rune_primary_4_url = await get_rune_url_from_id(curret_player_match.runePrimary4);
   var rune_secondary_1_url = await get_rune_url_from_id(curret_player_match.runeSecondary1);
   var rune_secondary_2_url = await get_rune_url_from_id(curret_player_match.runeSecondary2);
