@@ -213,7 +213,16 @@ export function Dmg({ curret_player_match, team }: { curret_player_match: MatchP
 export function Cs({ curret_player_match }: { curret_player_match: MatchPlayer }) {
   return (
     <div className="flex flex-col text-center justify-center w-12">
-      <p title="Vision score">{curret_player_match.totalMinionsKilled}cs</p>
+      <p title="CS">{curret_player_match.totalMinionsKilled}cs</p>
+    </div>
+  );
+}
+export function Cspmin({ curret_player_match }: { curret_player_match: MatchPlayer }) {
+  return (
+    <div className="flex flex-col text-center justify-center w-12">
+      <p title="CS per min">
+        {Math.floor(curret_player_match.totalMinionsKilled / curret_player_match.gameDuration)}cs/min
+      </p>
     </div>
   );
 }
@@ -297,7 +306,8 @@ function SmallPlayer({
   return (
     <div className="flex flex-row  child [&>*]:justify-center [&>*]:items-center [&>*]:text-center divide-x divide-slate-400/25">
       <KDA match={match} curret_player_match={curret_player_match}></KDA>
-      <Cs curret_player_match={curret_player_match} />
+      {/*<Cs curret_player_match={curret_player_match} />*/}
+      <Cspmin curret_player_match={curret_player_match} />
       <Suspense fallback={<SuspenseFallback text={'Champion'} width={'w-24'} />}>
         <Champion curret_player_match={curret_player_match}></Champion>
       </Suspense>

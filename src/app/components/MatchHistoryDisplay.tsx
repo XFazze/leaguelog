@@ -6,7 +6,7 @@ import MatchControl from './MatchControl';
 
 export default async function MatchHistoryDisplay({ large_region, puuid }: { large_region: string; puuid: string }) {
   var match_history = await get_matchhistory_by_puuid(large_region, puuid);
-  match_history.matches = match_history.matches.slice(0, 20);
+  match_history.matches = match_history.matches.slice(0, 10);
   return (
     <div className="flex flex-col gap-4">
       {match_history.matches.map((matchId: string) => (
@@ -26,10 +26,10 @@ export default async function MatchHistoryDisplay({ large_region, puuid }: { lar
         </div>
       );
     }
-    var curret_player_match = match.matchPlayer.find((player:any) => player.puuid === puuid)!;
+    var curret_player_match = match.matchPlayer.find((player: any) => player.puuid === puuid)!;
     var enemy_lane =
       match.matchPlayer.find(
-        (player:any) => player.teamPosition === curret_player_match.teamPosition && player.puuid !== puuid
+        (player: any) => player.teamPosition === curret_player_match.teamPosition && player.puuid !== puuid
       ) || null;
 
     return (
